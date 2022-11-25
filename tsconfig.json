@@ -1,0 +1,12 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "./js",
+    "module": "ESNext",
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "lib": ["DOM", "ESNext"]
+  },
+  "include": ["./src/*" ]
+}
