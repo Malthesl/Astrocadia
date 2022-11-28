@@ -7,9 +7,12 @@ import './keyboard.js';
 import { HomeScene } from './home.js';
 import { pressed } from './keyboard.js';
 
+// Load entities
 import './basicEnemy.js';
+import './homingEnemy.js';
 import './text.js';
 
+// Find and create ctx
 const canvas = <HTMLCanvasElement>document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -99,6 +102,8 @@ function tick(ms: number) {
   timings.ms = ms;
   timings.tick = Math.min(timings.delta / 1000 * 20, 1);
   
+  let TS = Date.now();
+  
   // Particles movement
   for (let i = particles.length - 1; i >= 0; i--)
   {
@@ -114,17 +119,38 @@ function tick(ms: number) {
   // Scene
   scenes[scene].ontick();
   
-  // Draw
-  draw();
+  let TE = Date.now();
   
-  // FPS-counter
-  ctx.font = '4px Arial';
-  let DBT = (1000 / timings.delta).toFixed(2) + ' fps';
-  let DBW = ctx.measureText(DBT).width;
-  ctx.fillStyle = '#444';
-  ctx.fillRect(0, 0, DBW + 2, 6);
-  ctx.fillStyle = '#fff';
-  ctx.fillText(DBT, 1, 4.4);
+  // Draw
+  let DS = Date.now();
+  draw();
+  let DE = Date.now();
+  
+  // Debug
+  if (debugMode)
+  {
+    document.getElementById('g_debug').innerHTML = `
+    ${(1000 / timings.delta).toFixed(2)} fps
+    F: ~${timings.delta.toFixed(0)} ms
+    S: ~${DE - TS} ms ${((DE - TS) / timings.delta * 100).toFixed(0)} %
+    T: ~${TE - TS} ms ${((TE - TS) / timings.delta * 100).toFixed(0)} %
+    D: ~${DE - DS} ms ${((DE - DS) / timings.delta * 100).toFixed(0)} %
+  `.trim();
+  }
+  
+  document.getElementById('g_debug').style.display = debugMode ? 'block' : 'none';
+  
+  /**
+   * DEBUG MENU EXPLANATION
+   * fps - Current FPS
+   * F - Time since last frame (delta)
+   * S - Total tick & draw time + % tick & draw time of delta
+   * T - Total tick time + % tick time of F
+   * D - Total draw time + % draw time of F
+   *
+   * The procentages need to be <100% to continue at the current framerate
+   * The goal is to always be under <20%, and be around <10% most of the time
+   */
   
   for (const key in pressed)
   {
@@ -168,3 +194,15 @@ requestAnimationFrame(tick);
 
 // Event listeners
 window.addEventListener('resize', resetCanvas);
+
+// Debug mode
+export let debugMode = 1;
+window.addEventListener('keydown', e => {
+  if (e.shiftKey && e.code === 'Tab')
+  {
+    e.preventDefault();
+    debugMode++;
+    // This can be changed later for more debug mode views
+    if (debugMode > 1) debugMode = 0;
+  }
+});

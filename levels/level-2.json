@@ -2,7 +2,7 @@
   "name": "Level 1",
   "goal": {
     "type": "score",
-    "stars": [ 500, 1250, 3000 ]
+    "stars": [ 600, 1200, 2400 ]
   },
   "player": {
     "offsetX": 0,
@@ -16,28 +16,17 @@
   },
   "spawners": [
     {
-      "id": "basicEnemy",
+      "id": "homingEnemy",
       "start": 500,
-      "startRate": 500,
+      "startRate": 1000,
       "endRate": 200,
       "rangePct": 0.5,
-      "transitionTime": 60000,
+      "transitionTime": 120000,
       "args": {
-        "sides": ["left"],
+        "sides": ["left", "top", "right", "bottom"],
         "speed": 2
       }
     }
   ],
-  "entities": [
-    {
-      "id": "text",
-      "args": {
-        "x": 0,
-        "y": 100,
-        "content": "Control your ship with A/D.",
-        "color": "#fff",
-        "size": 6
-      }
-    }
-  ]
+  "entities": []
 }

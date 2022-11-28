@@ -13,6 +13,14 @@ export const levels: {[id: string]: LevelMeta} = {
     id: 'level-1',
     name: 'Level 1',
   },
+  'level-2': {
+    id: 'level-2',
+    name: 'Level 2',
+  },
+  'deathwish': {
+    id: 'deathwish',
+    name: 'DEATHWISH (performance test)',
+  },
 };
 
 export const levelList = Object.keys(levels);

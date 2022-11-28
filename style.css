@@ -6,6 +6,14 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  /*width: 100vw;*/
-  /*height: 100vh;*/
+}
+
+#g_debug {
+  position: fixed;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  background: #000;
+  border: 1px solid #333;
+  padding: 4px;
+  white-space: pre-line;
 }

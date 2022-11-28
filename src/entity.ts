@@ -24,7 +24,13 @@ export class Entity {
   draw(ctx: CanvasRenderingContext2D) {
   }
   
+  destroyed = false;
+  
   destroy() {
-    if (this.game) this.game.entities.splice(this.game.entities.indexOf(this), 1);
+    if (this.game)
+    {
+      this.game.entities.splice(this.game.entities.indexOf(this), 1);
+      this.destroyed = true;
+    }
   }
 }

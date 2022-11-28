@@ -73,7 +73,6 @@ export class IngameScene extends Scene {
         
         // Spawn initial entities
         this.level.entities.forEach(entity => {
-          console.log(entity);
           this.entities.push(new entities[entity.id](this, entity.args));
         });
         

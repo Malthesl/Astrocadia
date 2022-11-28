@@ -1,0 +1,32 @@
+{
+  "name": "DEATHWISH",
+  "goal": {
+    "type": "score",
+    "stars": [ 1000000, 1000000, 1000000 ]
+  },
+  "player": {
+    "offsetX": 0,
+    "offsetY": 0,
+    "direction": 0
+  },
+  "environment": {
+    "panX": 100,
+    "panY": 0,
+    "stars": true
+  },
+  "spawners": [
+    {
+      "id": "homingEnemy",
+      "start": 0,
+      "startRate": 1,
+      "endRate": 1,
+      "rangePct": 0,
+      "transitionTime": 1,
+      "args": {
+        "sides": ["left", "top", "right", "bottom"],
+        "speed": 0.1
+      }
+    }
+  ],
+  "entities": []
+}

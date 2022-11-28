@@ -19,7 +19,8 @@ export class Bullet extends Entity {
     this.y += d.y;
     
     // Collision with wall
-    if (outsideScreen(this.x, this.y, 3, 3)) {
+    if (outsideScreen(this.x, this.y, 3, 3))
+    {
       explode(ABullet, this.x, this.y);
       this.destroy();
     }
