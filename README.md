@@ -9,7 +9,6 @@ The assets are from the v1.0 of this project, made in 2019. Which I found, and I
 Missing things / My To-Do:
 - Enemies
 - Level content
-    - Enemy spawning: timings, waves, where
     - Goal conditions
     - Environment settings
 - Shop, including more ships with different abilities and customization

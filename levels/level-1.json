@@ -1,0 +1,31 @@
+{
+  "name": "Level 1",
+  "goal": {
+    "type": "points",
+    "stars": [1000, 2000, 5000]
+  },
+  "player": {
+    "offsetX": 0,
+    "offsetY": 0,
+    "direction": 0
+  },
+  "environment": {
+    "panX": 0,
+    "panY": 0,
+    "stars": true
+  },
+  "spawners": [
+    {
+      "id": "basicEnemy",
+      "start": 500,
+      "startRate": 500,
+      "endRate": 200,
+      "rangePct": 0.5,
+      "transitionTime": 60000,
+      "args": {
+        "side": "left",
+        "speed": 2
+      }
+    }
+  ]
+}

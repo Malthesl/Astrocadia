@@ -6,6 +6,7 @@ interface UserSave {
 interface LevelSave {
   stars: number;
   completed: boolean;
+  highscore: number;
 }
 
 // user/save object
@@ -13,14 +14,7 @@ export let user: UserSave = {
   levels: {
     '1': {
       stars: 1,
-      completed: true
-    },
-    '2': {
-      stars: 2,
-      completed: true
-    },
-    '3': {
-      stars: 3,
+      highscore: 100,
       completed: true
     }
   }

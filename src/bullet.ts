@@ -4,23 +4,42 @@ import { Vec2 } from './vec2.js';
 import { timings } from './main.js';
 import { explode } from './explode.js';
 import { outsideScreen } from './util.js';
+import { BasicEnemy } from './basicEnemy.js';
 
 const ABullet = new Asset('bullet1.png').image;
 
 export class Bullet extends Entity {
-  x = 0;
-  y = 0;
-  direction = 0;
   speed = 8;
+  size = 3;
+  isPlayerOwner = false;
   
   tick() {
     let d = Vec2.direction(this.direction).mul(this.speed * timings.tick);
     this.x += d.x;
     this.y += d.y;
     
+    // Collision with wall
     if (outsideScreen(this.x, this.y, 3, 3)) {
       explode(ABullet, this.x, this.y);
       this.destroy();
+    }
+    
+    // Detect with entity
+    for (let i = 0; i < this.scene.entities.length; i++)
+    {
+      let entity = this.scene.entities[i];
+      
+      if (entity === this) continue;
+      
+      // If the player is the owner of the bullet, it should only hit enemies (which all should extend BasicEnemy
+      if (this.isPlayerOwner && entity instanceof BasicEnemy)
+      {
+        if (Vec2.dist(entity, this) - entity.size / 2 - this.size / 2 < 0)
+        {
+          entity.explode();
+          this.destroy();
+        }
+      }
     }
   }
   

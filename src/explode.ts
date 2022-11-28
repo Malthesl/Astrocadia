@@ -23,7 +23,7 @@ export function explode(image: HTMLImageElement, x: number, y: number) {
     samples.push(hColor);
   }
   
-  for (let i = 0; i < image.width ** 2 * props.particleFactor; i++)
+  for (let i = 0; i < image.width ** 1.6 * props.particleFactor; i++)
   {
     let dir = Vec2.direction(Math.random() * Math.PI * 2);
     particles.push({
@@ -31,7 +31,7 @@ export function explode(image: HTMLImageElement, x: number, y: number) {
       y,
       vx: dir.x * (Math.random() * 2 + 0.5),
       vy: dir.y * (Math.random() * 2 + 0.5),
-      z: 2,
+      z: 1,
       r: 0,
       t: 1000,
       ts: 1000,

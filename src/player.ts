@@ -2,7 +2,6 @@ import { Entity } from './entity.js';
 import { Asset } from './asset.js';
 import { particles, props, timings } from './main.js';
 import { keys } from './keyboard.js';
-import { Vec2 } from './vec2.js';
 import { Bullet } from './bullet.js';
 import { outsideScreen } from './util.js';
 import { explode } from './explode.js';
@@ -14,7 +13,7 @@ export class Player extends Entity {
   x = props.width / 2;
   y = props.height / 2;
   speed = 4;
-  direction = 0;
+  size = 9;
   
   nextBullet = 0;
   nextParticle = 0;
@@ -25,18 +24,17 @@ export class Player extends Entity {
     if (keys.KeyD) this.direction += .07;
     
     // Movement
-    let dir = Vec2.direction(this.direction).mul(this.speed);
-    this.x += dir.x * timings.tick;
-    this.y += dir.y * timings.tick;
+    super.tick();
     
     // Fire
     if (this.nextBullet <= 0)
     {
-      this.nextBullet = 1000 / 5;
+      this.nextBullet = 1000 / 3;
       const bullet = new Bullet(this.scene);
       bullet.x = this.x;
       bullet.y = this.y;
       bullet.direction = this.direction;
+      bullet.isPlayerOwner = true;
       this.scene.addEntity(bullet);
     }
     else this.nextBullet -= timings.delta;
@@ -59,7 +57,7 @@ export class Player extends Entity {
     }
     
     // Screen death
-    if (outsideScreen(this.x, this.y, 3, 3)) this.destroy();
+    if (outsideScreen(this.x, this.y, 3, 3)) this.explode();
   }
   
   // Draw
@@ -72,7 +70,7 @@ export class Player extends Entity {
   }
   
   // Destroy and explode
-  destroy() {
+  explode() {
     explode(AShip, this.x, this.y);
     super.destroy();
   }
