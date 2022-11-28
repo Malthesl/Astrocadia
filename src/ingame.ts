@@ -135,9 +135,9 @@ export class IngameScene extends Scene {
     
     if (this.state === 'gameover')
     {
-      this.gameovertimer += timings.delta;
+      this.gameoverTimer += timings.delta;
       
-      if (this.gameovertimer > 500 && pressed.any)
+      if (this.gameoverTimer > 500 && pressed.any)
       {
         setScene('home');
       }
@@ -145,13 +145,13 @@ export class IngameScene extends Scene {
     
   }
   
-  gameovertimer = 0;
+  gameoverTimer = 0;
   
   ondraw(ctx: CanvasRenderingContext2D) {
     // MOVE AWAY FROM ENTITIES AT GAMEOVER
-    if (this.gameovertimer)
+    if (this.gameoverTimer)
     {
-      ctx.translate(0, this.gameovertimer / 10);
+      ctx.translate(0, this.gameoverTimer / 10);
       
       this.stars = new Vec2(0, 12);
     }
@@ -161,7 +161,7 @@ export class IngameScene extends Scene {
       entity.draw(ctx);
     }
     // RESTORE TRANSFORM
-    ctx.translate(0, -this.gameovertimer / 10);
+    ctx.translate(0, -this.gameoverTimer / 10);
     
     // Draw ingame UI
     if (this.state === 'playing')
@@ -204,27 +204,27 @@ export class IngameScene extends Scene {
       ctx.fillText('GAMEOVER', (props.width - ctx.measureText('GAMEOVER').width) / 2, 80);
       
       // Final time
-      ctx.fillStyle = this.gameovertimer > 200 ? '#fff' : '#0000';
+      ctx.fillStyle = this.gameoverTimer > 200 ? '#fff' : '#0000';
       ctx.font = '6px \'Press Start 2P\', cursive';
       let timeText = 'TIME ' + getTimeText(this.finalTime);
       ctx.fillText(timeText, (props.width - ctx.measureText(timeText).width) / 2, 95);
       
       // Final score
-      ctx.fillStyle = this.gameovertimer > 400 ? '#fff' : '#0000';
+      ctx.fillStyle = this.gameoverTimer > 400 ? '#fff' : '#0000';
       ctx.font = '6px \'Press Start 2P\', cursive';
       let scoreText = 'SCORE ' + this.finalScore;
       ctx.fillText(scoreText, (props.width - ctx.measureText(scoreText).width) / 2, 105);
       
       // High score
-      ctx.fillStyle = this.gameovertimer > 600 ? '#fff' : '#0000';
+      ctx.fillStyle = this.gameoverTimer > 600 ? '#fff' : '#0000';
       ctx.font = '6px \'Press Start 2P\', cursive';
       let highScoreText = 'HIGHSCORE ' + user.levels[this.levelId].highscore;
       ctx.fillText(highScoreText, (props.width - ctx.measureText(highScoreText).width) / 2, 115);
       
       // Final stars
-      if (this.gameovertimer < 800) return;
+      if (this.gameoverTimer < 800) return;
       let stars = this.getStars(this.finalScore);
-      let anim = (this.gameovertimer - 800) / 10;
+      let anim = (this.gameoverTimer - 800) / 10;
       ctx.drawImage(stars >= 1 ? AStar : AStarGray, props.width / 2 - 13 * 2 - (stars >= 1 ? Math.max(0, 20 - anim) : 0), 125 - (stars >= 1 ? Math.max(0, 20 - anim) : 0), 13 + (stars >= 1 ? Math.max(0, 20 - anim) * 2 : 0), 13 + (stars >= 1 ? Math.max(0, 20 - anim) * 2 : 0));
       if (anim > 5)
         ctx.drawImage(stars >= 2 ? AStar : AStarGray, props.width / 2 - 13 / 2 - (stars >= 2 ? Math.max(0, 25 - anim) : 0), 125 - (stars >= 2 ? Math.max(0, 25 - anim) : 0), 13 + (stars >= 2 ? Math.max(0, 25 - anim) * 2 : 0), 13 + (stars >= 2 ? Math.max(0, 25 - anim) * 2 : 0));
@@ -232,7 +232,7 @@ export class IngameScene extends Scene {
         ctx.drawImage(stars >= 3 ? AStar : AStarGray, props.width / 2 + 13 - (stars >= 3 ? Math.max(0, 30 - anim) : 0), 125 - (stars >= 3 ? Math.max(0, 30 - anim) : 0), 13 + (stars >= 3 ? Math.max(0, 30 - anim) * 2 : 0), 13 + (stars >= 3 ? Math.max(0, 30 - anim) * 2 : 0));
       
       // "PRESS ANY KEY TO CONTINUE"
-      ctx.fillStyle = this.gameovertimer > 2000 && this.gameovertimer % 2000 < 1000 ? '#fff' : '#0000';
+      ctx.fillStyle = this.gameoverTimer > 2000 && this.gameoverTimer % 2000 < 1000 ? '#fff' : '#0000';
       ctx.font = '6px \'Press Start 2P\', cursive';
       let continueText = 'PRESS ANY KEY TO CONTINUE';
       ctx.fillText(continueText, (props.width - ctx.measureText(continueText).width) / 2, 155);
@@ -274,7 +274,7 @@ export class IngameScene extends Scene {
     user.levels[this.levelId] = {
       completed: user.levels[this.levelId]?.completed || this.getStars(this.finalScore) >= 1,
       highscore: Math.max(user.levels[this.levelId]?.highscore || 0, this.finalScore),
-      stars: this.getStars(this.finalScore)
+      stars: Math.max(user.levels[this.levelId]?.stars || 0, this.getStars(this.finalScore))
     };
     
     this.state = 'gameover';
