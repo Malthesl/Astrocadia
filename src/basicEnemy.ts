@@ -4,6 +4,8 @@ import { props } from './main.js';
 import { Asset } from './asset.js';
 import { explode } from './explode.js';
 import { enemies } from './enemies.js';
+import { Player } from './player.js';
+import { Vec2 } from './vec2.js';
 
 const AEnemy = new Asset('enemyship_simple.png').image;
 
@@ -34,6 +36,15 @@ export class BasicEnemy extends Entity {
   tick() {
     super.tick();
     if (this.x > props.width + this.size) this.destroy();
+    
+    // Collision with player
+    let player = <Player>this.scene.entities.find(e => e instanceof Player);
+  
+    if (player && Vec2.dist(player, this) - player.size / 2 - this.size / 2 < 0)
+    {
+      player.explode();
+      this.destroy();
+    }
   }
   
   draw(ctx: CanvasRenderingContext2D) {
