@@ -1,8 +1,8 @@
 {
   "name": "Level 1",
   "goal": {
-    "type": "points",
-    "stars": [1000, 2000, 5000]
+    "type": "score",
+    "stars": [1000, 1500, 3000]
   },
   "player": {
     "offsetX": 0,

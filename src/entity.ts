@@ -3,7 +3,7 @@ import { Vec2 } from './vec2.js';
 import { timings } from './main.js';
 
 export class Entity {
-  scene: IngameScene;
+  game: IngameScene;
   x = 0;
   y = 0;
   speed = 1;
@@ -11,7 +11,7 @@ export class Entity {
   size = 1;
   
   constructor(scene: IngameScene) {
-    this.scene = scene;
+    this.game = scene;
   }
   
   tick() {
@@ -25,6 +25,6 @@ export class Entity {
   }
   
   destroy() {
-    if (this.scene) this.scene.entities.splice(this.scene.entities.indexOf(this), 1);
+    if (this.game) this.game.entities.splice(this.game.entities.indexOf(this), 1);
   }
 }

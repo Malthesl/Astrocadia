@@ -11,13 +11,7 @@ interface LevelSave {
 
 // user/save object
 export let user: UserSave = {
-  levels: {
-    '1': {
-      stars: 1,
-      highscore: 100,
-      completed: true
-    }
-  }
+  levels: {}
 };
 
 // TODO: Saving/Loading

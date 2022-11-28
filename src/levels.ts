@@ -43,6 +43,7 @@ export function getCurrentPlayerLevel() {
   {
     if (getLevelInfo(levelList[i]).status === 'unlocked') return levelList[i];
   }
+  return levelList[levelList.length - 1];
 }
 
 // Start a level

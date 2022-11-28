@@ -38,7 +38,7 @@ export class BasicEnemy extends Entity {
     if (this.x > props.width + this.size) this.destroy();
     
     // Collision with player
-    let player = <Player>this.scene.entities.find(e => e instanceof Player);
+    let player = <Player>this.game.entities.find(e => e instanceof Player);
   
     if (player && Vec2.dist(player, this) - player.size / 2 - this.size / 2 < 0)
     {
@@ -57,6 +57,7 @@ export class BasicEnemy extends Entity {
   
   explode() {
     explode(AEnemy, this.x, this.y);
+    this.game.score += 20;
     this.destroy();
   }
 }

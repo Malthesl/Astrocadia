@@ -30,12 +30,12 @@ export class Player extends Entity {
     if (this.nextBullet <= 0)
     {
       this.nextBullet = 1000 / 3;
-      const bullet = new Bullet(this.scene);
+      const bullet = new Bullet(this.game);
       bullet.x = this.x;
       bullet.y = this.y;
       bullet.direction = this.direction;
       bullet.isPlayerOwner = true;
-      this.scene.addEntity(bullet);
+      this.game.addEntity(bullet);
     }
     else this.nextBullet -= timings.delta;
     
@@ -72,6 +72,7 @@ export class Player extends Entity {
   // Destroy and explode
   explode() {
     explode(AShip, this.x, this.y);
+    this.game.gameover();
     super.destroy();
   }
 }

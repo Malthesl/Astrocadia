@@ -25,9 +25,9 @@ export class Bullet extends Entity {
     }
     
     // Detect with entity
-    for (let i = 0; i < this.scene.entities.length; i++)
+    for (let i = 0; i < this.game.entities.length; i++)
     {
-      let entity = this.scene.entities[i];
+      let entity = this.game.entities[i];
       
       if (entity === this) continue;
       
