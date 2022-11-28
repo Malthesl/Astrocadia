@@ -6,11 +6,11 @@ export class Entity {
   game: IngameScene;
   x = 0;
   y = 0;
-  speed = 1;
+  speed = 0;
   direction = 0;
   size = 1;
   
-  constructor(scene: IngameScene) {
+  constructor(scene: IngameScene, options?: any) {
     this.game = scene;
   }
   

@@ -7,6 +7,9 @@ import './keyboard.js';
 import { HomeScene } from './home.js';
 import { pressed } from './keyboard.js';
 
+import './basicEnemy.js';
+import './text.js';
+
 const canvas = <HTMLCanvasElement>document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 

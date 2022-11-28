@@ -6,11 +6,12 @@ import { explode } from './explode.js';
 import { enemies } from './enemies.js';
 import { Player } from './player.js';
 import { Vec2 } from './vec2.js';
+import { entities } from './entities.js';
 
 const AEnemy = new Asset('enemyship_simple.png').image;
 
 interface BasicEnemySpawnOptions {
-  side: 'left' | 'top' | 'right' | 'bottom';
+  side?: 'left' | 'top' | 'right' | 'bottom';
   speed?: number;
 }
 
@@ -63,3 +64,4 @@ export class BasicEnemy extends Entity {
 }
 
 enemies['basicEnemy'] = BasicEnemy;
+entities['basicEnemy'] = BasicEnemy;

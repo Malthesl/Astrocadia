@@ -9,6 +9,7 @@ import { Vec2 } from './vec2.js';
 import { pressed } from './keyboard.js';
 import { user } from './user.js';
 import { getTimeText } from './util.js';
+import { entities } from './entities.js';
 
 interface Level {
   name: string,
@@ -26,21 +27,19 @@ interface Level {
     panY: 0,
     stars: true
   },
-  spawners: [
-    {
-      id: 'basicEnemy',
-      start: 500, // after X ms
-      startRate: 1000, // each X ms
-      endRate: 200, // each X ms
-      rangePct: 0.5, // +-% random change in rates
-      transitionTime: 60000 // after X ms,
-      args: {
-        // any, e.g.:
-        side: "left",
-        speed: 2
-      }
-    }
-  ]
+  spawners: {
+    id: string,
+    start: number, // after X ms
+    startRate: number, // each X ms
+    endRate: number, // each X ms
+    rangePct: number, // +-% random change in rates
+    transitionTime: number // after X ms,
+    args: {[key: string]: any}
+  }[],
+  entities: {
+    id: string,
+    args: {[key: string]: any}
+  }[]
 }
 
 const AStar = new Asset('star.png').image;
@@ -71,6 +70,13 @@ export class IngameScene extends Scene {
       .then(level => {
         this.state = 'playing';
         this.level = level;
+        
+        // Spawn initial entities
+        this.level.entities.forEach(entity => {
+          console.log(entity);
+          this.entities.push(new entities[entity.id](this, entity.args));
+        });
+        
       });
     
     // Spawn player

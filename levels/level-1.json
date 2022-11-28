@@ -2,7 +2,7 @@
   "name": "Level 1",
   "goal": {
     "type": "score",
-    "stars": [1000, 1500, 3000]
+    "stars": [ 1000, 1500, 3000 ]
   },
   "player": {
     "offsetX": 0,
@@ -25,6 +25,18 @@
       "args": {
         "side": "left",
         "speed": 2
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "text",
+      "args": {
+        "x": 0,
+        "y": 100,
+        "content": "Control your ship with A/D.",
+        "color": "#fff",
+        "size": 6
       }
     }
   ]
