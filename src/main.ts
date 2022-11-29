@@ -8,8 +8,9 @@ import { HomeScene } from './home.js';
 import { pressed } from './keyboard.js';
 
 // Load entities
-import './basicEnemy.js';
-import './homingEnemy.js';
+import './enemies/basicEnemy.js';
+import './enemies/homingEnemy.js'
+import './enemies/strafeEnemy.js';
 import './text.js';
 
 // Find and create ctx

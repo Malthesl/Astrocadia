@@ -11,11 +11,15 @@ export interface LevelMeta {
 export const levels: {[id: string]: LevelMeta} = {
   'level-1': {
     id: 'level-1',
-    name: 'Level 1',
+    name: 'Introduction',
   },
   'level-2': {
     id: 'level-2',
-    name: 'Level 2',
+    name: 'Homing',
+  },
+  'level-3': {
+    id: 'level-3',
+    name: 'Strafe',
   },
   'deathwish': {
     id: 'deathwish',

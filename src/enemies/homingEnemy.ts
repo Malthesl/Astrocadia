@@ -1,14 +1,14 @@
-import { IngameScene } from './ingame.js';
-import { Asset } from './asset.js';
-import { enemies } from './enemies.js';
-import { entities } from './entities.js';
+import { IngameScene } from '../ingame.js';
+import { Asset } from '../asset.js';
+import { enemies } from '../enemies.js';
+import { entities } from '../entities.js';
 import { BasicEnemy } from './basicEnemy.js';
-import { Player } from './player.js';
+import { Player } from '../player.js';
 
 const AHomingEnemy = new Asset('enemyship_homing.png').image;
 
 export class HomingEnemy extends BasicEnemy {
-  size = 15;
+  size = 9;
   image = AHomingEnemy;
   score = 25;
   

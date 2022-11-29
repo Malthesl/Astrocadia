@@ -1,12 +1,12 @@
-import { Entity } from './entity.js';
-import { IngameScene } from './ingame.js';
-import { props } from './main.js';
-import { Asset } from './asset.js';
-import { explode } from './explode.js';
-import { enemies } from './enemies.js';
-import { Player } from './player.js';
-import { Vec2 } from './vec2.js';
-import { entities } from './entities.js';
+import { Entity } from '../entity.js';
+import { IngameScene } from '../ingame.js';
+import { props } from '../main.js';
+import { Asset } from '../asset.js';
+import { explode } from '../explode.js';
+import { enemies } from '../enemies.js';
+import { Player } from '../player.js';
+import { Vec2 } from '../vec2.js';
+import { entities } from '../entities.js';
 
 const AEnemy = new Asset('enemyship_simple.png').image;
 

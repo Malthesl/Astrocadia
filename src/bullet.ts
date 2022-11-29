@@ -4,7 +4,8 @@ import { Vec2 } from './vec2.js';
 import { timings } from './main.js';
 import { explode } from './explode.js';
 import { outsideScreen } from './util.js';
-import { BasicEnemy } from './basicEnemy.js';
+import { BasicEnemy } from './enemies/basicEnemy.js';
+import { Player } from './player.js';
 
 const ABullet = new Asset('bullet1.png').image;
 
@@ -32,8 +33,8 @@ export class Bullet extends Entity {
       
       if (entity === this) continue;
       
-      // If the player is the owner of the bullet, it should only hit enemies (which all should extend BasicEnemy
-      if (this.isPlayerOwner && entity instanceof BasicEnemy)
+      // If the player is the owner of the bullet, it should only hit enemies (which all should extend BasicEnemy), and when the player is not the owner, it should only hit the player.
+      if ((this.isPlayerOwner && entity instanceof BasicEnemy) || (!this.isPlayerOwner && entity instanceof Player))
       {
         if (Vec2.dist(entity, this) - entity.size / 2 - this.size / 2 < 0)
         {

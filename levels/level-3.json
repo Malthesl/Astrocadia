@@ -1,0 +1,42 @@
+{
+  "name": "Level 1",
+  "goal": {
+    "type": "score",
+    "stars": [ 600, 1200, 2400 ]
+  },
+  "player": {
+    "offsetX": 0,
+    "offsetY": 0,
+    "direction": 0
+  },
+  "environment": {
+    "panX": 0,
+    "panY": 0,
+    "stars": true
+  },
+  "spawners": [
+    {
+      "id": "basicEnemy",
+      "start": 500,
+      "startRate": 1000,
+      "endRate": 300,
+      "rangePct": 0.5,
+      "transitionTime": 120000,
+      "args": {
+        "sides": ["left"]
+      }
+    },
+    {
+      "id": "strafeEnemy",
+      "start": 5000,
+      "startRate": 5000,
+      "endRate": 1000,
+      "rangePct": 0.5,
+      "transitionTime": 60000,
+      "args": {
+        "sides": ["left"]
+      }
+    }
+  ],
+  "entities": []
+}
