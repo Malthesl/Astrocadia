@@ -20,8 +20,8 @@ export class Player extends Entity {
   
   tick() {
     // Controls
-    if (keys.KeyA) this.direction -= .07;
-    if (keys.KeyD) this.direction += .07;
+    if (keys.KeyA) this.direction -= .3 * timings.tick;
+    if (keys.KeyD) this.direction += .3 * timings.tick;
     
     // Movement
     super.tick();
