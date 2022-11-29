@@ -12,6 +12,7 @@ import './enemies/basicEnemy.js';
 import './enemies/homingEnemy.js';
 import './enemies/strafeEnemy.js';
 import './text.js';
+import { IngameScene } from './ingame.js';
 
 // Find and create ctx
 const canvas = <HTMLCanvasElement>document.getElementById('main-canvas');
@@ -92,10 +93,22 @@ function resetCanvas() {
 export let timings = {
   delta: 0,
   tick: 0,
-  ms: 0,
+  ms: 0
 };
 
 // Debug
+export let debugMode = 0;
+window.addEventListener('keydown', e => {
+  // Debug mode is accessed by Shift+Tab
+  if (e.shiftKey && e.code === 'Tab')
+  {
+    e.preventDefault();
+    debugMode++;
+    // This can be changed later for more debug mode views
+    if (debugMode > 2) debugMode = 0;
+  }
+});
+
 const eachTickDebug: [number, number, number][] = new Array(400).fill([0, 0, 0]);
 const debugGraph = <HTMLCanvasElement>document.getElementById('g_debug_graph');
 const debugGraphCTX = debugGraph.getContext('2d');
@@ -107,6 +120,23 @@ let debugGraphScaleY = 4;
 
 debugGraphCTX.scale(1, debugGraphScaleY);
 
+let TS = 0, TE = 0, DS = 0, DE = 0;
+
+setInterval(() => {
+  if (debugMode === 2)
+  {
+    document.getElementById('g_debug').innerHTML = `
+    Performance @ 0.1s
+    ${(1000 / timings.delta).toFixed(2)} fps
+    F: ~${timings.delta.toFixed(0)} ms
+    S: ~${DE - TS} ms ${((DE - TS) / timings.delta * 100).toFixed(0)} %
+    T: ~${TE - TS} ms ${((TE - TS) / timings.delta * 100).toFixed(0)} %
+    D: ~${DE - DS} ms ${((DE - DS) / timings.delta * 100).toFixed(0)} %
+  `.trim();
+  }
+}, 100);
+
+// Particles
 export let particles: {x: number, y: number, z: number, r: number, t: number, ts: number, vx?: number, vy?: number, vz?: number, vr?: number, color: string}[] = [];
 
 // Main tick loop
@@ -115,7 +145,7 @@ function tick(ms: number) {
   timings.ms = ms;
   timings.tick = Math.min(timings.delta / 1000 * 20, 1);
   
-  let TS = Date.now();
+  TS = Date.now();
   
   // Particles movement
   for (let i = particles.length - 1; i >= 0; i--)
@@ -132,24 +162,31 @@ function tick(ms: number) {
   // Scene
   scenes[scene].ontick();
   
-  let TE = Date.now();
+  TE = Date.now();
   
   // Draw
-  let DS = Date.now();
+  DS = Date.now();
   draw();
-  let DE = Date.now();
+  DE = Date.now();
   
   // Debug
   if (debugMode)
   {
-    document.getElementById('g_debug').innerHTML = `
-    ${(1000 / timings.delta).toFixed(2)} fps
-    F: ~${timings.delta.toFixed(0)} ms
-    S: ~${DE - TS} ms ${((DE - TS) / timings.delta * 100).toFixed(0)} %
-    T: ~${TE - TS} ms ${((TE - TS) / timings.delta * 100).toFixed(0)} %
-    D: ~${DE - DS} ms ${((DE - DS) / timings.delta * 100).toFixed(0)} %
-  `.trim();
-    
+    if (debugMode === 1)
+    {
+      document.getElementById('g_debug').innerHTML = `
+      Performance @ NOW
+      ${(1000 / timings.delta).toFixed(2)} fps
+      F: ~${timings.delta.toFixed(0)} ms
+      S: ~${DE - TS} ms ${((DE - TS) / timings.delta * 100).toFixed(0)} %
+      T: ~${TE - TS} ms ${((TE - TS) / timings.delta * 100).toFixed(0)} %
+      D: ~${DE - DS} ms ${((DE - DS) / timings.delta * 100).toFixed(0)} %
+      Scene [${scene}]
+      ${(<any>scenes[scene])?.entities ? 'E: ' + (<any>scenes[scene])?.entities.length : '(no entities)'}
+      (G)P: ${particles.length}
+      ${scenes[scene] instanceof IngameScene ? 'L: ' + (<IngameScene>scenes[scene]).levelId + ' (' + (<IngameScene>scenes[scene]).state + ')\n' + Math.floor((<IngameScene>scenes[scene]).time) + 'ms' : '(not a level)'}
+    `.trim();
+    }
     /**
      * DEBUG MENU EXPLANATION
      * fps - Current FPS
@@ -157,6 +194,11 @@ function tick(ms: number) {
      * S - Total tick & draw time + % tick & draw time of delta
      * T - Total tick time + % tick time of F
      * D - Total draw time + % draw time of F
+     *
+     * Scene - Current scene
+     * E: Amount of entities, if an entities array is included with the scene
+     * P: Global, number of particles
+     * L: The current level, when playing a level, with game state in parentheses, and game time on the next line
      *
      * The procentages need to be <100% to continue at the current framerate
      * The goal is to always be under <20%, and be around <10% most of the time
@@ -232,16 +274,3 @@ requestAnimationFrame(tick);
 
 // Event listeners
 window.addEventListener('resize', resetCanvas);
-
-// Debug mode
-export let debugMode = 0;
-window.addEventListener('keydown', e => {
-  // Debug mode is accessed by Shift+Tab
-  if (e.shiftKey && e.code === 'Tab')
-  {
-    e.preventDefault();
-    debugMode++;
-    // This can be changed later for more debug mode views
-    if (debugMode > 1) debugMode = 0;
-  }
-});
