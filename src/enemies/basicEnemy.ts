@@ -64,7 +64,7 @@ export class BasicEnemy extends Entity {
     if (v.y < 0 && this.y < 0 - this.size) this.destroy();
     
     // Collision with player
-    let player = <Player>this.game.entities.find(e => e instanceof Player);
+    let player = this.game.player;
     
     if (player && Vec2.dist(player, this) - player.size / 2 - this.size / 2 < 0)
     {

@@ -60,6 +60,8 @@ export class IngameScene extends Scene {
   
   spawners: {next: number, transition: number, started: boolean}[] = [];
   
+  player: false | Player = false;
+  
   constructor(id: string) {
     super();
     
@@ -79,7 +81,8 @@ export class IngameScene extends Scene {
       });
     
     // Spawn player
-    this.entities.push(new Player(this));
+    this.player = new Player(this);
+    this.entities.push(this.player);
   }
   
   ontick() {

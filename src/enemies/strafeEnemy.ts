@@ -25,7 +25,7 @@ export class StrafeEnemy extends BasicEnemy {
   }
   
   tick() {
-    let player = <Player>this.game.entities.find(p => p instanceof Player);
+    let player = this.game.player;
     
     // Return when the player gets too close
     if (player && Vec2.dist(this, player) < 60 && this.state === 'attacking')

@@ -17,7 +17,7 @@ export class HomingEnemy extends BasicEnemy {
   }
   
   tick() {
-    let player = <Player>this.game.entities.find(p => p instanceof Player);
+    let player = this.game.player;
     
     if (player)
     {

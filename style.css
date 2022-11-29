@@ -17,3 +17,9 @@ body {
   padding: 4px;
   white-space: pre-line;
 }
+
+#g_debug_graph {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}

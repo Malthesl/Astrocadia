@@ -69,10 +69,15 @@ export class Player extends Entity {
     ctx.restore();
   }
   
+  destroy() {
+    this.game.player = false;
+    this.game.gameover();
+    super.destroy();
+  }
+  
   // Destroy and explode
   explode() {
     explode(AShip, this.x, this.y);
-    this.game.gameover();
-    super.destroy();
+    this.destroy();
   }
 }

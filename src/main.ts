@@ -9,7 +9,7 @@ import { pressed } from './keyboard.js';
 
 // Load entities
 import './enemies/basicEnemy.js';
-import './enemies/homingEnemy.js'
+import './enemies/homingEnemy.js';
 import './enemies/strafeEnemy.js';
 import './text.js';
 
@@ -95,6 +95,18 @@ export let timings = {
   ms: 0,
 };
 
+// Debug
+const eachTickDebug: [number, number, number][] = new Array(400).fill([0, 0, 0]);
+const debugGraph = <HTMLCanvasElement>document.getElementById('g_debug_graph');
+const debugGraphCTX = debugGraph.getContext('2d');
+
+debugGraph.height = 400;
+debugGraph.width = 400;
+
+let debugGraphScaleY = 4;
+
+debugGraphCTX.scale(1, debugGraphScaleY);
+
 export let particles: {x: number, y: number, z: number, r: number, t: number, ts: number, vx?: number, vy?: number, vz?: number, vr?: number, color: string}[] = [];
 
 // Main tick loop
@@ -137,21 +149,46 @@ function tick(ms: number) {
     T: ~${TE - TS} ms ${((TE - TS) / timings.delta * 100).toFixed(0)} %
     D: ~${DE - DS} ms ${((DE - DS) / timings.delta * 100).toFixed(0)} %
   `.trim();
+    
+    /**
+     * DEBUG MENU EXPLANATION
+     * fps - Current FPS
+     * F - Time since last frame (delta)
+     * S - Total tick & draw time + % tick & draw time of delta
+     * T - Total tick time + % tick time of F
+     * D - Total draw time + % draw time of F
+     *
+     * The procentages need to be <100% to continue at the current framerate
+     * The goal is to always be under <20%, and be around <10% most of the time
+     */
+    
+    eachTickDebug.shift();
+    eachTickDebug.push([timings.delta, TE - TS, DE - DS]);
+    
+    debugGraphCTX.clearRect(0, 0, debugGraph.width, debugGraph.height / debugGraphScaleY);
+    for (let i = 0; i < eachTickDebug.length; i++)
+    {
+      let t = eachTickDebug[i];
+      debugGraphCTX.fillStyle = 'orange';
+      debugGraphCTX.fillRect(i, debugGraph.height / debugGraphScaleY - t[0], 1, t[0]);
+      debugGraphCTX.fillStyle = 'red';
+      debugGraphCTX.fillRect(i, debugGraph.height / debugGraphScaleY - t[1] - t[2], 1, t[1] + t[2]);
+      debugGraphCTX.fillStyle = 'blue';
+      debugGraphCTX.fillRect(i, debugGraph.height / debugGraphScaleY - t[1], 1, t[1]);
+    }
+    
+    /**
+     * DEBUG GRAPH EXPLANATION
+     * Yellow: Time since last frame. The following colors should stack up to be under this at all times, to keep the current framerate.
+     * Blue: Time to tick
+     * Red: Time to draw
+     *
+     * By default; 4px=1ms
+     */
   }
   
   document.getElementById('g_debug').style.display = debugMode ? 'block' : 'none';
-  
-  /**
-   * DEBUG MENU EXPLANATION
-   * fps - Current FPS
-   * F - Time since last frame (delta)
-   * S - Total tick & draw time + % tick & draw time of delta
-   * T - Total tick time + % tick time of F
-   * D - Total draw time + % draw time of F
-   *
-   * The procentages need to be <100% to continue at the current framerate
-   * The goal is to always be under <20%, and be around <10% most of the time
-   */
+  document.getElementById('g_debug_graph').style.display = debugMode ? 'block' : 'none';
   
   for (const key in pressed)
   {
@@ -197,8 +234,9 @@ requestAnimationFrame(tick);
 window.addEventListener('resize', resetCanvas);
 
 // Debug mode
-export let debugMode = 1;
+export let debugMode = 0;
 window.addEventListener('keydown', e => {
+  // Debug mode is accessed by Shift+Tab
   if (e.shiftKey && e.code === 'Tab')
   {
     e.preventDefault();
