@@ -26,7 +26,7 @@ export class Bullet extends Entity {
       this.destroy();
     }
     
-    // Detect with entity
+    // Detect collision with entity
     for (let i = 0; i < this.game.entities.length; i++)
     {
       let entity = this.game.entities[i];
@@ -34,7 +34,7 @@ export class Bullet extends Entity {
       if (entity === this) continue;
       
       // If the player is the owner of the bullet, it should only hit enemies (which all should extend BasicEnemy), and when the player is not the owner, it should only hit the player.
-      if ((this.isPlayerOwner && entity instanceof BasicEnemy) || (!this.isPlayerOwner && entity instanceof Player))
+      if ((this.isPlayerOwner && entity instanceof BasicEnemy && entity.collision) || (!this.isPlayerOwner && entity instanceof Player))
       {
         if (Vec2.dist(entity, this) - entity.size / 2 - this.size / 2 < 0)
         {

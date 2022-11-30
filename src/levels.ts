@@ -21,6 +21,10 @@ export const levels: {[id: string]: LevelMeta} = {
     id: 'level-3',
     name: 'Strafe',
   },
+  'level-4': {
+    id: 'level-4',
+    name: 'Bombs',
+  },
   'deathwish': {
     id: 'deathwish',
     name: 'DEATHWISH (performance test)',

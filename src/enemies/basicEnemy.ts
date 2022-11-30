@@ -4,7 +4,6 @@ import { props } from '../main.js';
 import { Asset } from '../asset.js';
 import { explode } from '../explode.js';
 import { enemies } from '../enemies.js';
-import { Player } from '../player.js';
 import { Vec2 } from '../vec2.js';
 import { entities } from '../entities.js';
 
@@ -19,36 +18,40 @@ export class BasicEnemy extends Entity {
   size = 15;
   image = AEnemy;
   score = 20;
+  collision = true;
   
   constructor(scene: IngameScene, options: BasicEnemySpawnOptions) {
     super(scene);
     
     this.speed = options.speed || 2;
     
-    let side = options.sides[Math.floor(Math.random() * options.sides.length)]
-    
-    switch (side)
+    if (options.sides)
     {
-      case 'left':
-        this.x = -10;
-        this.y = Math.random() * props.height;
-        this.direction = Math.random() - 0.5;
-        break;
-      case 'top':
-        this.x = Math.random() * props.width;
-        this.y = -10;
-        this.direction = Math.random() - 0.5 + Math.PI / 2;
-        break;
-      case 'right':
-        this.x = props.width + 10;
-        this.y = Math.random() * props.height;
-      this.direction = Math.random() - 0.5 + Math.PI;
-        break;
-      case 'bottom':
-        this.x = Math.random() * props.width;
-        this.y = props.height + 10;
-        this.direction = Math.random() - 0.5 + Math.PI / 2 * 3;
-        break;
+      let side = options.sides[Math.floor(Math.random() * options.sides.length)];
+      
+      switch (side)
+      {
+        case 'left':
+          this.x = -10;
+          this.y = Math.random() * props.height;
+          this.direction = Math.random() - 0.5;
+          break;
+        case 'top':
+          this.x = Math.random() * props.width;
+          this.y = -10;
+          this.direction = Math.random() - 0.5 + Math.PI / 2;
+          break;
+        case 'right':
+          this.x = props.width + 10;
+          this.y = Math.random() * props.height;
+          this.direction = Math.random() - 0.5 + Math.PI;
+          break;
+        case 'bottom':
+          this.x = Math.random() * props.width;
+          this.y = props.height + 10;
+          this.direction = Math.random() - 0.5 + Math.PI / 2 * 3;
+          break;
+      }
     }
     
   }
@@ -66,7 +69,7 @@ export class BasicEnemy extends Entity {
     // Collision with player
     let player = this.game.player;
     
-    if (player && Vec2.dist(player, this) - player.size / 2 - this.size / 2 < 0)
+    if (this.collision && player && Vec2.dist(player, this) - player.size / 2 - this.size / 2 < 0)
     {
       player.explode();
       this.destroy();

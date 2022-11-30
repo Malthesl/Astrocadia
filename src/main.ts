@@ -6,13 +6,14 @@ import { Vec2 } from './vec2.js';
 import './keyboard.js';
 import { HomeScene } from './home.js';
 import { pressed } from './keyboard.js';
+import { IngameScene } from './ingame.js';
 
 // Load entities
 import './enemies/basicEnemy.js';
 import './enemies/homingEnemy.js';
 import './enemies/strafeEnemy.js';
+import './enemies/bombEnemy.js';
 import './text.js';
-import { IngameScene } from './ingame.js';
 
 // Find and create ctx
 const canvas = <HTMLCanvasElement>document.getElementById('main-canvas');

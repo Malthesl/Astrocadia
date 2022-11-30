@@ -3,7 +3,6 @@ import { Asset } from '../asset.js';
 import { enemies } from '../enemies.js';
 import { entities } from '../entities.js';
 import { BasicEnemy } from './basicEnemy.js';
-import { Player } from '../player.js';
 import { Vec2 } from '../vec2.js';
 import { timings } from '../main.js';
 import { Bullet } from '../bullet.js';
@@ -64,10 +63,6 @@ export class StrafeEnemy extends BasicEnemy {
     }
     
     super.tick();
-  }
-  
-  draw(ctx: CanvasRenderingContext2D) {
-    super.draw(ctx);
   }
 }
 

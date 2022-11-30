@@ -3,7 +3,6 @@ import { Asset } from '../asset.js';
 import { enemies } from '../enemies.js';
 import { entities } from '../entities.js';
 import { BasicEnemy } from './basicEnemy.js';
-import { Player } from '../player.js';
 
 const AHomingEnemy = new Asset('enemyship_homing.png').image;
 
@@ -25,10 +24,6 @@ export class HomingEnemy extends BasicEnemy {
     }
     
     super.tick();
-  }
-  
-  draw(ctx: CanvasRenderingContext2D) {
-    super.draw(ctx);
   }
 }
 
